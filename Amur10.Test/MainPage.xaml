@@ -8,6 +8,29 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" Text="Amur10" FontSize="35"/>
+        <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="A set of custom Windows 10 Universal App controls" FontSize="20"/>
+        </Grid>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel  Margin="0,50,0,0" HorizontalAlignment="Center">
+                <HyperlinkButton x:Name="CountdownButton" Content="CountdownTimer" FontSize="18" 
+                                 Foreground="Black" Click="CountdownButton_Click"/>
+                <HyperlinkButton x:Name="MiniCountdownButton" Content="Mini CountdownTimer" FontSize="18" 
+                                 Foreground="Black" Click="MiniCountdownButton_Click"/>                
+            </StackPanel>
+        </ScrollViewer>
 
+        <Grid x:Name="details" Grid.Column="1" Grid.Row="1">
+            <Frame x:Name="PageFrame"/>
+        </Grid>
     </Grid>
 </Page>
