@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Amur10.Shared.Models;
+using Amur10.Shared.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +24,44 @@ namespace Amur10.Test.CustomPages
     /// </summary>
     public sealed partial class CountdownTimerPage : Page
     {
+        private const string ctrlName = "Countdown Timer";
+        
         public CountdownTimerPage()
         {
             this.InitializeComponent();
+
+            Loaded += (sender, e) =>
+            {                
+                ct.TimerStarted += (s, args) =>
+                {
+                    var msg = new LogMessage
+                    {
+                        CreatedDate = DateTime.Now,
+                        Content = $"{ctrlName} started at {args.StartTime}"
+                    };
+                    LoggingViewModel.Instance.AddMessage(msg);
+                };
+
+                ct.TimerPaused += (s, args) =>
+                {
+                    var msg = new LogMessage
+                    {
+                        CreatedDate = DateTime.Now,
+                        Content = $"{ctrlName} paused at {args.PauseTime}"
+                    };
+                    LoggingViewModel.Instance.AddMessage(msg);
+                };
+
+                ct.TimerEnded += (s, args) =>
+                {
+                    var msg = new LogMessage
+                    {
+                        CreatedDate = DateTime.Now,
+                        Content = $"{ctrlName} ended at {args.EndTime}"
+                    };
+                    LoggingViewModel.Instance.AddMessage(msg);
+                };
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

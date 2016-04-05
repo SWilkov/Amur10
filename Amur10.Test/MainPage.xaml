@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" Text="Amur10" FontSize="35"/>
         <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -32,5 +33,28 @@
         <Grid x:Name="details" Grid.Column="1" Grid.Row="1">
             <Frame x:Name="PageFrame"/>
         </Grid>
+        <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.HorizontalScrollMode="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollMode="Enabled"
+            Grid.Column="1" Grid.Row="2" Margin="0,20">
+            <Grid x:Name="LogGrid" >
+                <ItemsControl x:Name="LogList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="6*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding CreatedDate}" Foreground="Black" FontSize="16"/>
+                                <TextBlock Text="{Binding Content}" Foreground="Black" FontSize="16"
+                                           Grid.Column="1" TextWrapping="Wrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+    </ScrollViewer>
     </Grid>
 </Page>

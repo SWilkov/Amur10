@@ -23,6 +23,7 @@
                                ItemButtonBackground="Orange"
                                FontSize="30"
                                BorderBrush="Orange"
+                               BorderThickness="2"
                                ItemFontSize="25"
                                Foreground="Orange"
                                Width="300" Height="300"></timers:CountdownTimer>

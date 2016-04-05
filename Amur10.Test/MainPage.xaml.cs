@@ -1,4 +1,5 @@
-﻿using Amur10.Test.CustomPages;
+﻿using Amur10.Shared.ViewModels;
+using Amur10.Test.CustomPages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,22 +24,28 @@ namespace Amur10.Test
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public List<CustomPage> CustomPages;
-
+        public List<CustomPage> CustomPages = new List<CustomPage>
+        {
+            new CustomPage { Title = "CountdownTimer", PageType = typeof(CountdownTimerPage), Description = "A countdown timer that raises events on start, pause, end. Fully customizable" },
+            new CustomPage { Title = "Mini CountdownTimer", PageType = typeof(MiniCountdownTimerPage), Description = "A mini countdown timer that raises events on start, pause, end. Fully customizable" }
+        };
+        
         public MainPage()
         {
             this.InitializeComponent();
 
-            Loaded += (s, args) =>
+            Loaded += (sender, e) =>
             {
-                this.CustomPages = new List<CustomPage>
-                {
-                    new CustomPage { Title = "CountdownTimer", PageType = typeof(CountdownTimerPage), Description = "A countdown timer that raises events on start, pause, end. Fully customizable" },
-                    new CustomPage { Title = "Mini CountdownTimer", PageType = typeof(MiniCountdownTimerPage), Description = "A mini countdown timer that raises events on start, pause, end. Fully customizable" }
-                };
-
                 this.DataContext = CustomPages;
+                
+                this.LogList.ItemsSource = LoggingViewModel.LogMessages;                
+
                 this.PageFrame.Navigate(typeof(StarterPage));                
+            };
+
+            Unloaded += (sender, e) =>
+            {
+
             };
         }        
 
