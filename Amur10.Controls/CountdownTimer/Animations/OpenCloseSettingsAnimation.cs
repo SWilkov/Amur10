@@ -11,10 +11,15 @@ namespace Amur10.Controls.CountdownTimer.Animations
 {
     public class OpenCloseSettingsAnimation
     {
-        public Storyboard GetOpenCloseSettingsStoryboard(Grid settingsGrid, double duration, double to)
+        private const string TranslateXPath = "(UIElement.RenderTransform).(CompositeTransform.TranslateX)";
+        private const string TranslateYPath = "(UIElement.RenderTransform).(CompositeTransform.TranslateY)";
+
+        public Storyboard GetOpenCloseSettingsStoryboard(Grid settingsGrid, double duration, double to, OpenDirection direction)
         {
             var sb = new Storyboard();
             var animationDuration = new Duration(TimeSpan.FromMilliseconds(duration));
+
+            var path = direction == OpenDirection.Right ? TranslateXPath : TranslateYPath;
 
             var animation = new DoubleAnimation()
             {
@@ -22,7 +27,7 @@ namespace Amur10.Controls.CountdownTimer.Animations
                 Duration = animationDuration
             };
 
-            Storyboard.SetTargetProperty(animation, "(UIElement.RenderTransform).(CompositeTransform.TranslateX)");
+            Storyboard.SetTargetProperty(animation, path);
             Storyboard.SetTarget(animation, settingsGrid);
             sb.Children.Add(animation);
             return sb;

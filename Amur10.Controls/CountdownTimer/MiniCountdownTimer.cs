@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Amur10.Controls.CountdownTimer
 {
+    public enum OpenDirection { Right, Down }
+
     [TemplatePart(Name = "OpenCloseSettingsButton", Type = typeof(AppBarButton))]
     [TemplatePart(Name = "SettingsGrid", Type = typeof(Grid))]
     [TemplatePart(Name = "HoursButton", Type = typeof(Button))]
@@ -56,15 +58,16 @@ namespace Amur10.Controls.CountdownTimer
                     if (SettingsOpen)
                     {
                         if (closeSettingsSb == null)
-                            closeSettingsSb = openCloseAnimation.GetOpenCloseSettingsStoryboard(this.SettingsGrid, 500, 0);
+                            closeSettingsSb = openCloseAnimation.GetOpenCloseSettingsStoryboard(this.SettingsGrid, 500, 0, this.OpenDirection);
 
                         closeSettingsSb.Begin();
                         SettingsOpen = false;
                     }
                     else
                     {
+                        var to = OpenDirection == OpenDirection.Right ? this.SettingsGrid.Width : this.SettingsGrid.Height;
                         if (openSettingsSb == null)
-                            openSettingsSb = openCloseAnimation.GetOpenCloseSettingsStoryboard(this.SettingsGrid, 500, this.SettingsGrid.Width);
+                            openSettingsSb = openCloseAnimation.GetOpenCloseSettingsStoryboard(this.SettingsGrid, 500, to, this.OpenDirection);
 
                         openSettingsSb.Begin();
                         SettingsOpen = true;
@@ -283,6 +286,17 @@ namespace Amur10.Controls.CountdownTimer
         #endregion
 
         #region Dependency Properties
+
+        public OpenDirection OpenDirection
+        {
+            get { return (OpenDirection)GetValue(OpenDirectionProperty); }
+            set { SetValue(OpenDirectionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for OpenDirection.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OpenDirectionProperty =
+            DependencyProperty.Register("OpenDirection", typeof(OpenDirection), typeof(MiniCountdownTimer), new PropertyMetadata(OpenDirection.Right));
+        
 
         public Brush SettingsBackground
         {
